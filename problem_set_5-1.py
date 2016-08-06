@@ -30,9 +30,9 @@ import math
 # 
 # 
 
-answer_function = "f3"   # One of f1, f2, f3
-answer_bin = -1         # One of 1, 0, -1
-answer_value = 0.8165   # precision to 4 decimal places.
+answer_function = ""   # One of f1, f2, f3
+answer_bin = ""         # One of 1, 0, -1
+answer_value = ""   # precision to 4 decimal places.
 
 ###### MYSTERY FUNCTION
 
@@ -101,6 +101,7 @@ coverage = {}
 # To track function calls, you will have to check 'if event == "return"', and in 
 # that case the variable arg will hold the return value of the function,
 # and frame.f_code.co_name will hold the function name
+# coverage will hold the return value (an integer) of f1, f2 and f3
 def traceit(frame, event, arg):
     global coverage
 
@@ -110,8 +111,10 @@ def traceit(frame, event, arg):
         
     return traceit
 
-# Run the program with each test case and record 
-# input, result and coverage of functions
+# Run the program with each test case and record in runs
+# 1. the input (the input into mystery function)
+# 2. the result of the mystery function
+# 3. the coverage (outcome of f1, f2, f3)
 def run_tests(inputs):
     runs   = []
     for input in inputs:
@@ -124,12 +127,11 @@ def run_tests(inputs):
     return runs
 
 # Compute n11, n10, etc. for each function, first categorising
-# the result of the function (01, 0, 1)
-# TO BE AMENDED AS CURRENTLY ONLY WORKING FOR INTEGER RESULTS
+# the result of the function (-1, 0, 1)
+
 def compute_n(tables):
     for input, outcome, coverage in runs:        
         for fun, value in coverage.iteritems():
-            #print fun, value
             category = ""
 
             if value > 0:
@@ -139,11 +141,6 @@ def compute_n(tables):
             else:
                 category = '-1'
             
-            # DO FOR LIST, STRING, SET
-
-            # DO FOR BOOLEAN
-
-            # DO NAN and NONE and EXCEPTIONS
 
             for categories in tables[fun]:
                 n11, n10, n01, n00 = tables[fun][categories]

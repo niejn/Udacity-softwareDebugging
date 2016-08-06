@@ -15,4 +15,4 @@ Updated: August 2016
   * ps4-3: Change the state
   * ps4-4: Make it work
 5. Problem Set 5 - Reproducing Failures
-  * ps5-2: Solve the Mystery (***to be updated to include non-integer results***)
+  * ps5-2: Solve the Mystery 
