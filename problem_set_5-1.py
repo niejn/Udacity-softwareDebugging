@@ -129,17 +129,36 @@ def run_tests(inputs):
 # Compute n11, n10, etc. for each function, first categorising
 # the result of the function (-1, 0, 1)
 
+# in the given example input/functions the function outputs
+# are always integers. However as per introduction code has been
+# added to account for non-integer outputs
+
 def compute_n(tables):
     for input, outcome, coverage in runs:        
         for fun, value in coverage.iteritems():
             category = ""
 
-            if value > 0:
-                category = '1'
-            elif value == 0:
-                category = '0'
+            if type(value) is str or type(value) is list:
+                if len(value) == 0:
+                    category = " 0"
+                else:
+                    category = " 1"
+            
+            elif type(value) is bool:
+                if value == True:
+                    category = " 1"
+                else:
+                    category = " 0"
+                
+            elif type(value) is int or type(value) is float:
+                if value > 0:
+                    category = ' 1'
+                elif value == 0:
+                    category = ' 0'
+                else:
+                    category = '-1'
             else:
-                category = '-1'
+                category = "-1"
             
 
             for categories in tables[fun]:
@@ -165,7 +184,7 @@ def init_tables(runs):
     tables = {}
     for (input, outcome, coverage) in runs:
         for fun in coverage:
-            tables[fun] = {'-1': (0,0,0,0), '0': (0,0,0,0), '1': (0,0,0,0)}
+            tables[fun] = {'-1': (0,0,0,0), ' 0': (0,0,0,0), ' 1': (0,0,0,0)}
     return tables
 
 # Calculate phi coefficient from given values            
